@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="72" height="14" tilewidth="24" tileheight="24">
  <properties>
+  <property name="autosave" value="false"/>
   <property name="blue" value="115"/>
   <property name="green" value="109"/>
   <property name="red" value="105"/>
@@ -65,6 +66,87 @@
   <object type="info" x="144" y="192" width="24" height="48">
    <properties>
     <property name="info" value="This door is locked."/>
+   </properties>
+  </object>
+  <object name="vent" type="door" x="1676" y="188" width="31" height="62"/>
+  <object type="sprite" x="1656" y="168" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan1.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1680" y="168" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan2.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1704" y="168" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan1.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1656" y="192" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan2.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1704" y="192" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan2.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1416" y="144" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan2.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1032" y="120" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan2.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="1296" y="120" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan1.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="456" y="120" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan2.png"/>
+    <property name="width" value="24"/>
+   </properties>
+  </object>
+  <object type="sprite" x="672" y="144" width="24" height="24">
+   <properties>
+    <property name="animation" value="1-2,1"/>
+    <property name="height" value="24"/>
+    <property name="sheet" value="images/sprites/greendale/ventfan1.png"/>
+    <property name="width" value="24"/>
    </properties>
   </object>
  </objectgroup>

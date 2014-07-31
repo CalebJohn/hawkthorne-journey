@@ -48,13 +48,16 @@ end
 
 function Scroll:draw()
     if self.dead then return end
-    love.graphics.drawq(self.sheet, self.thumbnail, math.floor(self.position.x), self.position.y)
+    love.graphics.draw(self.sheet, self.thumbnail, math.floor(self.position.x), self.position.y)
 end
 
 function Scroll:update(dt)
     if self.dropping then
         -- gravity
-        self.position.y = self.position.y + self.velocity.y*dt
+        self.position = {x = self.position.x + self.velocity.x*dt,
+                         y = self.position.y + self.velocity.y*dt
+                        }
+        -- X velocity won't need to change
         self.velocity.y = self.velocity.y + game.gravity*dt
         
         self.bb:moveTo(self.position.x + self.width / 2, self.position.y + self.height / 2)

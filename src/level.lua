@@ -23,6 +23,8 @@ local Platform = require 'nodes/platform'
 local Sprite = require 'nodes/sprite'
 local Block = require 'nodes/block'
 
+local save = require 'save'
+
 local function limit( x, min, max )
     return math.min(math.max(x,min),max)
 end
@@ -155,6 +157,7 @@ function Level.new(name)
     level.title = getTitle(level.map)
     level.environment = {r=255, g=255, b=255, a=255}
     level.trackPlayer = true
+    level.autosave = level.map.properties.autosave or true
  
     level:panInit()
 
@@ -260,9 +263,9 @@ function Level:loadNode(path)
   return true, class
 end
 
-function Level:restartLevel()
+function Level:restartLevel(keepPosition)
     assert(self.name ~= "overworld","level's name cannot be overworld")
-    assert(Gamestate.currentState() ~= Gamestate.get("overworld"),"level cannot be overworld")
+    assert(Gamestate.currentState().name ~= "overworld","level cannot be overworld")
     self.over = false
 
     self.player = Player.factory(self.collider)
@@ -272,8 +275,10 @@ function Level:restartLevel()
         height = self.map.height * self.map.tileheight
     }
     
-    self.player.position = {x = self.default_position.x,
-                            y = self.default_position.y}
+    if not keepPosition then
+      self.player.position = {x = self.default_position.x, y = self.default_position.y}
+    end
+
     Floorspaces:init()
 end
 
@@ -282,24 +287,31 @@ function Level:enter(previous, door, position)
     self.paused = false
     self.respawn = false
     self.state = 'idle'
+    self.leaving = false
 
     self.transition:forward(function()
         self.state = 'active'
     end)
 
     --only restart if it's an ordinary level
-    if previous.isLevel or previous==Gamestate.get('overworld')
-                        or previous==Gamestate.get('flyin') then
+    if previous.isLevel or previous.name=='overworld'
+                        or previous.name=='splash'
+                        or previous.name=='start' then
         self.previous = previous
         self:restartLevel()
     end
-    if previous == Gamestate.get('overworld')
-                   or previous==Gamestate.get('flyin') then
+    if previous.name == 'overworld'
+                   or previous.name=='splash'
+                   or previous.name=='start' then
         self.respawn = true
         self.player.character:respawn()
     end
     if not self.player then
         self:restartLevel()
+    end
+    
+    if previous.name=='costumeselect' then
+      self:restartLevel(true)
     end
 
     camera.max.x = self.map.width * self.map.tilewidth - window.width
@@ -349,15 +361,17 @@ function Level:enter(previous, door, position)
     end
 
     self.player:setSpriteStates(self.player.current_state_set or 'default')
+
+    if previous.isLevel and self.autosave == true then
+        save:saveGame(self, door)
+    end
 end
 
 function Level:init()
 end
 
 local function leaveLevel(level, levelName, doorName)
-  local destination = Gamestate.get(levelName)
-            
-  if level == destination then
+  if level.name == levelName then
     level.player.position = { -- Copy, or player position corrupts entrance data
       x = level.doors[doorName].x + level.doors[doorName].node.width / 2 - level.player.width / 2,
       y = level.doors[doorName].y + level.doors[doorName].node.height - level.player.height
@@ -381,6 +395,10 @@ function Level:update(dt)
         self.player:update(dt, self.map)
     end
 
+    if self.hud then
+        self.hud:update(dt)
+    end
+
     -- falling off the bottom of the map
     if self.player.position.y - self.player.height > self.map.height * self.map.tileheight then
         self.player.health = 0
@@ -396,6 +414,11 @@ function Level:update(dt)
             self.player.character:reset()
             local gamesave = app.gamesaves:active()
             local point = gamesave:get('savepoint', {level='studyroom', name='bookshelf'})
+            if app.config.hardcore then
+              point = {level = 'studyroom', name = 'bookshelf'}
+              self.player.money = 0
+              self.player.inventory:removeAllItems()
+            end
             Gamestate.switch(point.level, point.name)
         end)
     end
@@ -405,6 +428,9 @@ function Level:update(dt)
             node:update(dt, self.player)
         end
     end
+    
+    --Prevent further processing as values have been niled.
+    if self.leaving then return end
 
     --self.collider:update(dt)
 
@@ -533,8 +559,8 @@ function Level:floorspaceNodeDraw()
                     self.player:draw()
                     player_drawn = true
                 end
-                -- weapon:draw() is managed in player.lua to hack it with the floorspace
-                if not node.isWeapon then
+                -- weapon:draw() is managed in player.lua while the player is holding it
+                if not (node.isWeapon and node.player) then
                     node:draw()
                 end
             end
@@ -547,6 +573,7 @@ end
 
 -- Called by Gamestate.switch when changing levels
 function Level:leave()
+  self.leaving = true
   for i,node in pairs(self.nodes) do
     if node.leave then node:leave() end
     if node.collide_end then
@@ -709,4 +736,28 @@ function Level:copyNodes()
     end
     return tmpNodes
 end
+
+---
+-- Gets outgoing doors (i.e. which point to non-nil levels)
+-- @return array of outgoing doors
+function Level:getOutgoingDoors()
+  local doors = {}
+
+  -- process all nodes; self.doors doesn't contain all doors, it contains only named doors (i.e. incoming)
+  for _,door in pairs(self.nodes) do
+    if door.isDoor and door.level ~= nil then
+      table.insert(doors, door)
+    end
+  end
+
+  return doors
+end
+
+---
+-- Returns an user-friendly identifier
+-- @return string describing this level in a user-friendly (and hopefully unique) way
+function Level:getSourceId()
+  return string.format("level %s", self.name)
+end
+
 return Level

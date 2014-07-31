@@ -12,11 +12,13 @@
 local gamestate = require 'vendor/gamestate'
 local anim8 = require 'vendor/anim8'
 local Timer = require 'vendor/timer'
+local tween = require 'vendor/tween'
 local cheat = require 'cheat'
 local sound = require 'vendor/TEsound'
 local token = require 'nodes/token'
 local game = require 'game'
 local utils = require 'utils'
+
 
 local Enemy = {}
 Enemy.__index = Enemy
@@ -51,6 +53,7 @@ function Enemy.new(node, collider, enemytype)
     enemy.collider = collider
     
     enemy.dead = false
+    enemy.dying = false
     enemy.idletime = 0
     
     assert( enemy.props.damage, "You must provide a 'damage' value for " .. type )
@@ -139,7 +142,7 @@ function Enemy:animation()
     end
 end
 
-function Enemy:hurt( damage, special_damage )
+function Enemy:hurt( damage, special_damage, knockback )
     if self.dead then return end
     if self.props.die_sound then sound.playSfx( self.props.die_sound ) end
 
@@ -151,12 +154,13 @@ function Enemy:hurt( damage, special_damage )
 
     if self.hp <= 0 then
         self.state = 'dying'
+        self.dying = true
         self:cancel_flash()
 
         if self.containerLevel and self.props.splat then
           table.insert(self.containerLevel.nodes, 1, self.props.splat(self))
         end
-
+        
         self.collider:setGhost(self.bb)
         self.collider:setGhost(self.attack_bb)
         
@@ -169,10 +173,18 @@ function Enemy:hurt( damage, special_damage )
         if self.reviveTimer then Timer.cancel( self.reviveTimer ) end
         self:dropTokens()
     else
+        if knockback and not self.knockbackActive then
+            self.knockbackActive = true
+            tween.start(0.5, self.position,
+                            {x = self.position.x + (knockback or 0) * (self.props.knockback or 1)},
+                            'outCubic',
+                            function() self.knockbackActive = false end)
+        end
         if not self.flashing then
             self.flash = true
             self.flashing = Timer.addPeriodic(.12, function() self.flash = not self.flash end)
         end
+        if self.reviveTimer then Timer.cancel( self.reviveTimer ) end
         self.reviveTimer = Timer.add( self.revivedelay, function()
                                       self.state = 'default'
                                       self:cancel_flash()
@@ -271,6 +283,8 @@ function Enemy:collide(node, dt, mtv_x, mtv_y)
         and player.velocity.y > self.velocity.y and self.jumpkill then
         -- successful attack
         self:hurt(player.jumpDamage)
+        -- reset fall damage when colliding with an enemy
+        player.fall_damage = 0
         player.velocity.y = -450 * player.jumpFactor
     end
 
@@ -284,8 +298,14 @@ function Enemy:collide(node, dt, mtv_x, mtv_y)
     end
 
     -- attack
-    if self.props.attack_sound then sound.playSfx( self.props.attack_sound ) end
-    
+    if self.props.attack_sound then
+        if type(self.props.attack_sound) == 'table' then
+            sound.playSfx( self.props.attack_sound[math.random(#self.props.attack_sound)] )
+        else
+            sound.playSfx( self.props.attack_sound )
+        end
+    end
+
     if self.props.attack then
         self.props.attack(self,self.props.attackDelay)
     elseif self.animations['attack'] then
@@ -338,7 +358,7 @@ function Enemy:update( dt, player )
         self.props.update( dt, self, player )
     end
     
-    if not self.props.antigravity then
+    if not self.props.antigravity and not self.dying then
         -- Gravity
         self.velocity.y = self.velocity.y + game.gravity * dt
         if self.velocity.y > game.max_y then

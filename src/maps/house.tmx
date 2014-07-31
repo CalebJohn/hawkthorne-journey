@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="22" height="14" tilewidth="24" tileheight="24">
  <properties>
+  <property name="autosave" value="false"/>
   <property name="jumping" value="false"/>
   <property name="overworldName" value="town_1"/>
   <property name="soundtrack" value="tavern"/>
@@ -68,6 +69,7 @@
     <property name="sprite" value="fireplace"/>
     <property name="sprite_height" value="48"/>
     <property name="sprite_width" value="48"/>
+    <property name="trigger" value="doortriggers.painting"/>
     <property name="to" value="main"/>
    </properties>
   </object>

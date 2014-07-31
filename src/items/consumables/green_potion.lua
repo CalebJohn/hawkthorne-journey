@@ -1,16 +1,19 @@
 -- made by Nicko21
 local Timer = require 'vendor/timer'
 return{
-    name = "green_potion",
-    description = "Invulnerability Potion",
-    type = "consumable",
-    MAX_ITEMS = 2,
-    duration = 5,
-    use = function( consumable, player )
-        local orig = player.invulnerable
-        player.invulnerable = true
-        Timer.add(consumable.props.duration, function() 
-            player.invulnerable = orig
-        end)
-    end
+  name = "green_potion",
+  description = "Invulnerability Potion",
+  type = "consumable",
+  MAX_ITEMS = 2,
+  consumable = {
+    buff = {
+      attribute = "invulnerable",
+      value = true,
+      default = false,
+      duration = 5,
+      color = {34,177,76,255},
+      startMessage = "invulnerability activated",
+      endMessage = "invulnerability expired",
+    },
+  },
 }

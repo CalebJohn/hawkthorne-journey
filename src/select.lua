@@ -54,17 +54,17 @@ function state:enter(previous)
   self.character_selections[3] = {} -- page 3
   self.character_selections[3][0] = {} -- left
   self.character_selections[3][1] = {} -- right
-  self.character_selections[3][1][0] = 'ian'
+  self.character_selections[3][1][0] = 'duncan'
   self.character_selections[3][1][1] = 'rich'
   self.character_selections[3][1][2] = 'vicki'
   self.character_selections[3][0][0] = 'vaughn'
   self.character_selections[3][0][1] = 'garrett'
+  self.character_selections[3][0][2] = 'gilbert'
 
   self.selections = self.character_selections[self.current_page]
 
   fonts.set('big')
   self.previous = previous
-  self.music = sound.playMusic("opening")
   background.enter()
   background.setSelected(self.side, self.level)
 
@@ -95,7 +95,7 @@ end
 
 function state:keypressed( button )
   if button == "START" then
-    Gamestate.switch("splash")
+    Gamestate.switch("welcome")
     return true
   end
 
@@ -182,7 +182,6 @@ function state:leave()
   self.costumes = nil
   self.selections = nil
   self.previous = nil
-  self.music = nil
 end
 
 function state:update(dt)
@@ -222,9 +221,9 @@ function state:drawCharacter(name, x, y, offset)
   end
 
   if offset then
-    love.graphics.drawq(image, char.mask, x, y, 0, -1, 1)
+    love.graphics.draw(image, char.mask, x, y, 0, -1, 1)
   else
-    love.graphics.drawq(image, char.mask, x, y)
+    love.graphics.draw(image, char.mask, x, y)
   end
 end
 

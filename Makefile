@@ -42,9 +42,9 @@ bin/tmx2lua:
 
 bin/love.app/Contents/MacOS/love:
 	mkdir -p bin
-	$(wget) https://bitbucket.org/rude/love/downloads/love-0.8.0-macosx-ub.zip
-	unzip -q love-0.8.0-macosx-ub.zip
-	rm -f love-0.8.0-macosx-ub.zip
+	$(wget) https://bitbucket.org/rude/love/downloads/love-0.9.0-macosx-x64.zip
+	unzip -q love-0.9.0-macosx-x64.zip
+	rm -f love-0.9.0-macosx-x64.zip
 	mv love.app bin
 	cp osx/Info.plist bin/love.app/Contents
 
@@ -76,9 +76,10 @@ src/positions/%.lua: psds/positions/%.png
 	overlay2lua src/positions/config.json $<
 
 win32/love.exe:
-	$(wget) https://bitbucket.org/kyleconroy/love/downloads/windows-build-files.zip
-	unzip -q windows-build-files.zip
-	rm -f windows-build-files.zip
+	$(wget) https://bitbucket.org/rude/love/downloads/love-0.9.1-win32.zip
+	unzip love-0.9.1-win32.zip
+	mv love-0.9.1-win32 win32
+	rm -f love-0.9.1-win32.zip
 
 win32/hawkthorne.exe: build/hawkthorne.love win32/love.exe
 	cat win32/love.exe build/hawkthorne.love > win32/hawkthorne.exe
@@ -137,7 +138,7 @@ contributors: venv
 	venv/bin/python scripts/clean.py > CONTRIBUTORS
 	venv/bin/python scripts/credits.py > src/credits.lua
 
-test: $(LOVE)
+test: $(LOVE) maps
 	$(LOVE) src --test
 
 validate: venv lint

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="22" height="14" tilewidth="24" tileheight="24">
  <properties>
+  <property name="autosave" value="false"/>
   <property name="blue" value="83"/>
   <property name="green" value="148"/>
   <property name="jumping" value="false"/>
@@ -87,6 +88,7 @@
     <property name="sprite_height" value="65"/>
     <property name="sprite_width" value="48"/>
     <property name="to" value="main"/>
+    <property name="trigger" value="doortriggers.dalmatian"/>
    </properties>
   </object>
   <object type="hiddendoortrigger" x="335" y="158" width="24" height="40">
@@ -141,5 +143,6 @@
     <property name="width" value="20"/>
    </properties>
   </object>
+  <object name="vent" type="door" x="224" y="3" width="65" height="21"/>
  </objectgroup>
 </map>

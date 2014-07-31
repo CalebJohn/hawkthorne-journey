@@ -6,7 +6,7 @@
   <property name="offset" value="36"/>
   <property name="overworldName" value="forest_3"/>
   <property name="red" value="115"/>
-  <property name="soundtrack" value="forest"/>
+  <property name="soundtrack" value="forest-2"/>
  </properties>
  <tileset firstgid="1" name="forest" tilewidth="24" tileheight="24">
   <image source="../images/tilesets/forest.png" width="216" height="504"/>
@@ -232,7 +232,7 @@
   </object>
   <object name="torch" type="spawn" x="1416" y="168" width="24" height="24">
    <properties>
-    <property name="key" value="Rusted Brass"/>
+    <property name="key" value="rusted_brass"/>
     <property name="message" value="You found a Torch!"/>
     <property name="nodeType" value="weapon"/>
     <property name="offset_y" value="-40"/>
@@ -258,7 +258,7 @@
   <object name="rock" type="material" x="672" y="120" width="24" height="24"/>
   <object name="rock" type="material" x="1128" y="192" width="24" height="24"/>
   <object name="stick" type="material" x="912" y="720" width="24" height="24"/>
-  <object name="Rusted Brass" type="key" x="120" y="120" width="24" height="24"/>
+  <object name="rusted_brass" type="key" x="120" y="120" width="24" height="24"/>
   <object type="breakable_block" x="1272" y="144" width="48" height="48">
    <properties>
     <property name="crack" value="false"/>

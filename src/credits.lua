@@ -21,6 +21,7 @@ end
 
 function state:leave()
     fonts.reset()
+	camera:setPosition(0, 0)
 end
 
 function state:update(dt)
@@ -55,6 +56,7 @@ state.credits = {
     'afuturepresident',
     'ajay182',
     'akobrandon',
+    'alfonz42',
     'alkhava',
     'alpenghandi',
     'andcat7',
@@ -105,6 +107,7 @@ state.credits = {
     'claywin',
     'clogan1',
     'cmdoptesc',
+    'communityfan1107',
     'condoreo',
     'coolman1081',
     'coray8',
@@ -113,8 +116,10 @@ state.credits = {
     'cptbooyah',
     'creedogv',
     'creekee',
+    'curtis81',
     'cyberpie118',
     'cynical_redditor',
+    'dakkjaniels',
     'dancingshadow',
     'daniwa',
     'dano1163',
@@ -125,6 +130,7 @@ state.credits = {
     'deckhipstername',
     'delicioussoma',
     'derferman',
+    'derynator',
     'didory123',
     'diegothegnome',
     'dont do',
@@ -232,8 +238,10 @@ state.credits = {
     'maathewdavis',
     'majestic_moose',
     'malarchymike',
+    'marbly',
     'mario3d',
     'masonnixon',
+    'matthewbauer',
     'matthewdelacruz15',
     'max100101',
     'maxerj',
@@ -258,6 +266,7 @@ state.credits = {
     'necral',
     'necromanteion',
     'nerdsavvy',
+    'niamu',
     'nicko21',
     'niksn',
     'niles_smiles',

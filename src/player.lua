@@ -11,6 +11,7 @@ local Statemachine = require 'hawk/statemachine'
 local Gamestate = require 'vendor/gamestate'
 local InputController = require 'inputcontroller'
 local app = require 'app'
+local camera = require 'camera'
 
 local Inventory = require('inventory')
 
@@ -19,6 +20,7 @@ Player.__index = Player
 Player.isPlayer = true
 
 Player.startingMoney = 0
+Player.married = false
 
 Player.jumpFactor = 1
 Player.speedFactor = 1
@@ -42,6 +44,10 @@ function Player.new(collider)
     plyr.actions = {}
     plyr.position = {x=0, y=0}
     plyr.frame = nil
+    plyr.married = false
+    plyr.quest = nil
+    plyr.questParent = nil
+    plyr.affection = {}
     
     plyr.controlState = Statemachine.create({
         initial = 'normal',
@@ -60,7 +66,7 @@ function Player.new(collider)
     --for damage text
     plyr.healthText = {x=0, y=0}
     plyr.healthVel = {x=0, y=0}
-    plyr.max_health = 10
+    plyr.max_health = 100
     plyr.health = plyr.max_health
     
     plyr.jumpDamage = 3
@@ -68,7 +74,7 @@ function Player.new(collider)
 
     plyr.inventory = Inventory.new( plyr )
     
-    plyr.money = plyr.startingMoney
+    plyr.money = plyr.startingMoney   
     plyr.slideDamage = 8
     plyr.canSlideAttack = false
     
@@ -85,22 +91,19 @@ function Player:refillHealth()
 end
 
 function Player:refreshPlayer(collider)
-    --changes that are made if you're dead
-    if self.dead then
-        self.health = self.max_health
-        --self.money = 0
-        --self.inventory = Inventory.new( self )
-    end
-    
-    if self.character.changed then
-        self.character.changed = false
-        self.money = 0
-        self:refillHealth()
-        self.inventory = Inventory.new( self )
-        local gamesave = app.gamesaves:active()
-        if gamesave then
-            self:loadSaveData( gamesave )
-        end
+    if app.config.hardcore and self.dead then
+      self.health = self.max_health
+    else
+      if self.character.changed or self.dead then
+          self.character.changed = false
+          self.money = 0
+          self:refillHealth()
+          self.inventory = Inventory.new( self )
+          local gamesave = app.gamesaves:active()
+          if gamesave then
+              self:loadSaveData( gamesave )
+          end
+      end
     end
 
     self.invulnerable = false
@@ -273,7 +276,7 @@ function Player:keypressed( button, map )
                 self:drop()
             elseif controls:isDown( 'UP' ) then
                 self:throw_vertical()
-            else
+            elseif not self.currently_held or self.currently_held.type ~= 'vehicle' then
                 self:throw()
             end
         elseif self.current_state_set ~= 'crawling' then
@@ -281,6 +284,7 @@ function Player:keypressed( button, map )
         end
         return true
     elseif button == 'JUMP' then
+      if self.currently_held and self.currently_held.type == 'vehicle' then return end
         -- taken from sonic physics http://info.sonicretro.org/SPG:Jumping
         self.events:push('jump')
     elseif button == 'RIGHT' or button == 'LEFT' then
@@ -349,7 +353,7 @@ function Player:update(dt, map)
     local movingRight = controls:isDown( 'RIGHT' ) and not self.controlState:is('ignoreMovement')
 
 
-    if not self.invulnerable then
+    if not self.invulnerable and not self.potion then
         self:stopBlink()
     end
 
@@ -572,7 +576,10 @@ end
 -- @param damage The amount of damage to deal to the player
 --
 function Player:hurt(damage)
-    if self.invulnerable or self.godmode then
+    --Minimum damage is 5%
+    --Prevents damage from falling off small heights.
+    if damage < 5 then return end
+    if self.invulnerable or self.godmode or self.dead then
         return
     end
 
@@ -585,6 +592,10 @@ function Player:hurt(damage)
     self.rebounding = true
     self.invulnerable = true
 
+    local color = self.color
+    self.color = {255, 0, 0, 255}
+    if not color then color = self.color end
+
     if damage ~= nil then
         self.healthText.x = self.position.x + self.width / 2
         self.healthText.y = self.position.y
@@ -593,7 +604,7 @@ function Player:hurt(damage)
         self.health = math.max(self.health - damage, 0)
     end
 
-    if self.health == 0 then -- change when damages can be more than 1
+    if self.health <= 0 then
         self.dead = true
         self.character.state = 'dead'
     else
@@ -607,8 +618,21 @@ function Player:hurt(damage)
 
     Timer.add(1.5, function() 
         self.invulnerable = false
-        self.flash = false
         self.rebounding = false
+        self.color = color
+    end)
+
+    self:startBlink()
+end
+
+function Player:potionFlash(duration,color)
+    self:stopBlink()
+    self.color = color
+		self.potion = true
+
+    Timer.add(duration, function() 
+        self.potion = false
+        self.flash = false
     end)
 
     self:startBlink()
@@ -652,6 +676,9 @@ end
 -- Draws the player to the screen
 -- @return nil
 function Player:draw()
+
+    if self.currently_held and self.currently_held.type == 'vehicle' then return end
+
     if self.stencil then
         love.graphics.setStencil( self.stencil )
     else
@@ -665,7 +692,7 @@ function Player:draw()
     end
 
     if self.flash then
-        love.graphics.setColor( 255, 0, 0, 255 )
+        love.graphics.setColor(self.color)
     end
     
     if self.footprint and self.jumping then
@@ -697,7 +724,7 @@ function Player:draw()
         self.currently_held:draw()
     end
 
-    local health = self.damageTaken * -1
+    local health = math.ceil(self.damageTaken * -1 / 10)
 
     if self.rebounding and self.damageTaken > 0 then
         love.graphics.setColor( 255, 0, 0, 255 )
@@ -712,7 +739,19 @@ function Player:draw()
     love.graphics.setColor( 255, 255, 255, 255 )
     
     love.graphics.setStencil()
-    
+end
+
+-- Modifies the affection level of an npc toward the player
+-- @name the name of the npc
+-- @param amount the amount to modify the affection level
+-- @return the updated affection level
+function Player:affectionUpdate(name,amount)
+  if not self.affection[name] then
+    self.affection[name] = amount
+  else
+    self.affection[name] = self.affection[name] + amount
+  end
+  return self.affection[name]
 end
 
 -- Sets the sprite states of a player based on a preset combination
@@ -782,6 +821,14 @@ function Player:getSpriteStates()
             gaze_state   = (self.footprint and 'crawlgazewalk') or 'crawlidle',
             jump_state   = 'jump',
             idle_state   = 'crawlidle',
+            persistence  = false
+        },
+        resting = {
+            walk_state   = 'rest',
+            crouch_state = 'rest',
+            gaze_state   = 'rest',
+            jump_state   = 'rest',
+            idle_state   = 'rest',
             persistence  = false
         },
         default = {
@@ -1011,12 +1058,18 @@ end
 -- Saves necessary player data to the gamesave object
 -- @param gamesave the gamesave object to save to
 function Player:saveData( gamesave )
-    -- Save the inventory
-    self.inventory:save( gamesave )
-    -- Save our money
-    gamesave:set( 'coins', self.money )
-    -- Save visited levels
-    gamesave:set( 'visitedLevels', json.encode( self.visitedLevels ) )
+  -- Save the inventory
+  self.inventory:save( gamesave )
+  -- Save our money
+  gamesave:set( 'coins', self.money )
+
+  -- Save visited levels
+  gamesave:set( 'visitedLevels', json.encode( self.visitedLevels ) )
+  -- saves character & costume
+  gamesave:set( 'characterName', self.character.name )
+  gamesave:set( 'costumeName', self.character.costume )
+  -- Save npc affection level
+  gamesave:set( 'affection', json.encode( self.affection ) )
 end
 
 -- Loads necessary player data from the gamesave object
@@ -1029,6 +1082,13 @@ function Player:loadSaveData( gamesave )
     if coins ~= nil then
         self.money = coins
     end
+
+    local affection = gamesave:get( 'affection' )
+    if affection then
+      self.affection = json.decode( affection )
+    end
+
+
     -- Then load the visited levels
     local visited = gamesave:get( 'visitedLevels' )
     if visited ~= nil then
