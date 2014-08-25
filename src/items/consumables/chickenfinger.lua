@@ -4,6 +4,7 @@ return{
   description = "Chicken Finger",
   type = "consumable",
   MAX_ITEMS = 1,
+  width = 24,
   consumable = {
     heal = "max",
     buff = {

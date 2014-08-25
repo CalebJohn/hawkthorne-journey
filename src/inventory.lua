@@ -449,7 +449,7 @@ function Inventory:drop()
         itemProps.height = itemProps.height or height
 
         itemProps.x = self.player.position.x + 10
-        itemProps.y = self.player.position.y + 24 + (24 - itemProps.height)
+        itemProps.y = self.player.position.y + (24 - itemProps.height)
         itemProps.properties = {foreground = false}
 
         local myNewNode = NodeClass.new(itemProps, level.collider)

@@ -5,6 +5,7 @@ return{
   description = "Brekwich",
   type = "consumable",
   MAX_ITEMS = 2,
+  width = 24,
   consumable = {
     buff = {
       attribute = "jumpFactor",

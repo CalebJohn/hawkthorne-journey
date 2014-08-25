@@ -4,6 +4,7 @@ return{
   description = "Gummy Key-nana",
   type = "consumable",
   MAX_ITEMS = 2,
+  width = 24,
   consumable = {
     buff = {
       attribute = "invulnerable",

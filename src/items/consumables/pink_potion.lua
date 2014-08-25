@@ -4,5 +4,6 @@ return{
   description = "Max Health Potion",
   type = "consumable",
   MAX_ITEMS = 2,
+  width = 24,
   consumable = {heal = 'max'},
 }

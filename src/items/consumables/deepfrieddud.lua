@@ -5,6 +5,7 @@ return{
   description = "Deep Fried Dud",
   type = "consumable",
   MAX_ITEMS = 2,
+  width = 24,
   duration = 10,
   consumable = {
     randEffect = {
