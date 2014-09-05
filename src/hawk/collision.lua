@@ -6,7 +6,7 @@ function module.find_collision_layer(map)
       return layer
     end
   end
-  return nil
+  return {tiles = {}}
 end
 
 function module.platform_type(tile_id)
@@ -83,7 +83,29 @@ function module.current_tile(map, x, y, width, height)
   return result
 end
 
+-- Adds a tile to a specific location
+function module.add_tile(map, x, y, width, height, tile_type)
+    local collision_layer = module.find_collision_layer(map)
+    -- y needs to be offset so that it returns tile rather standing tile
+    local index = module.current_tile(map, x, y - height, width, height)
+    
+    -- Tiles only seem to contain an id
+    local tile = {id = tile_type}
+    collision_layer.tiles[index] = tile
+end
+
+-- Removes a tile from a specific location
+function module.remove_tile(map, x, y, width, height)
+    local collision_layer = module.find_collision_layer(map)
+    -- y needs to be offset so that it returns tile rather standing tile
+    local index = module.current_tile(map, x, y - height, width, height)
+    
+    collision_layer.tiles[index] = nil
+end
+
 function module.move_x(map, player, x, y, width, height, dx, dy)
+  if dx == 0 then return x end
+  
   local collision_layer = module.find_collision_layer(map)
   local direction = dx < 0 and "left" or "right"
   local new_x = x + dx
@@ -127,7 +149,6 @@ function module.move_x(map, player, x, y, width, height, dx, dy)
           if x <= tile_x and tile_x <= (new_x + width) then
             return tile_x - width
           end
-
         end
       end
     end
@@ -146,6 +167,8 @@ end
 
 
 function module.move_y(map, player, x, y, width, height, dx, dy)
+  if dy == 0 then return y end
+
   local direction = dy <= 0 and 'up' or 'down'
   local new_y = y + dy
   local collision_layer = module.find_collision_layer(map)
@@ -171,43 +194,36 @@ function module.move_y(map, player, x, y, width, height, dx, dy)
         end
 
         if platform_type == "block" then
-
+          -- will never be dropping when standing on a block  
+          player.platform_dropping = false
           -- If the block is sloped, interpolate the y value to be correct
           if slope_y <= (y + dy + height) then
             -- FIXME: Leaky abstraction
-            player.jumping = false
             player.velocity.y = 0
-            if player.isPlayer then
-                player:impactDamage()
-                player:restore_solid_ground()
+            if player.floor_pushback then
+                player:floor_pushback()
             end
             return slope_y - height
           end
         end
 
         if platform_type == "oneway" then
-          local above_tile = (y + height) <= slope_y 
-
           -- If player is in a sloped tile, keep them there
           local foot = y + height
+          local above_tile = foot <= slope_y
           local in_tile = sloped and foot > tile_y and foot <= tile_y + map.tileheight
 
           if (above_tile or in_tile) and slope_y <= (y + dy + height) then
           
-            -- Having a double check for dropping ensure the player only drops through 1 tile
             if player.platform_dropping == true then
-              player.platform_dropping = tile
-            end
-            
-            if player.platform_dropping == tile then
+                player.platform_dropping = y + height
+            elseif player.platform_dropping then
                 return new_y
             end
           
-            player.jumping = false
             player.velocity.y = 0
-            if player.isPlayer then
-                player:impactDamage()
-                player:restore_solid_ground()
+            if player.floor_pushback then
+                player:floor_pushback()
             end
             return slope_y - height
           end
@@ -230,6 +246,32 @@ function module.move_y(map, player, x, y, width, height, dx, dy)
       end 
     end
   end
+  
+  -- Scan through all moving platforms
+  for _, platform in ipairs(map.moving_platforms) do
+    if x + width >= platform.x and x <= platform.x + platform.width then
+      local foot = y + height
+      local above_tile = foot <= platform.y
+      
+      local in_tile = foot > platform.y and foot <= platform.y + platform.height
+      
+      if (above_tile or in_tile) and platform.y <= (y + dy + height) and
+         direction == 'down' then
+          
+        player.velocity.y = 0
+        if player.floor_pushback then
+          player:floor_pushback()
+        end
+        
+        platform:collide(player)
+        return platform.y - height
+      end
+    end
+    -- Player is no longer on the platform
+    if player.currentplatform == platform then
+      player.currentplatform = nil
+    end
+  end
 
   return new_y
 end
@@ -240,6 +282,14 @@ function module.move(map, player, x, y, width, height, dx, dy)
   local new_x = module.move_x(map, player, x, y, width, height, dx, dy)
   local new_y = module.move_y(map, player, new_x, y, width, height, dx, dy)
   return new_x, new_y
+end
+
+-- Returns whether or not the character can increase size
+function module.stand(map, player, x, y, width, height, new_height)
+    local change = height - new_height
+    local new_y = module.move_y(map, player, x, y, width, height, 0, change)
+    -- If it is possible to move to the new location, it means standing up is possible
+    return new_y == y + change
 end
 
 function module.scan_rows(map, x, y, width, height, direction)

@@ -137,7 +137,10 @@ function Projectile:update(dt, player, map)
     -- print(string.format("Need hand offset for %dx%d", holder.frame[1], holder.frame[2]))
     end
   end
-
+  
+  local nx, ny = collision.move(map, self, self.position.x, self.position.y,
+                                self.width, self.height, 
+                                self.velocity.x * dt, self.velocity.y * dt)
   if self.thrown then
     --update speed
     if self.velocity.x < 0 then
@@ -151,10 +154,9 @@ function Projectile:update(dt, player, map)
       self.velocity.y = self.velocityMax
     end
     self.velocity.x = Projectile.clip(self.velocity.x,self.velocityMax)
-
-    --update position
-    self.position.x = self.position.x + self.velocity.x * dt
-    self.position.y = self.position.y + self.velocity.y * dt
+    
+    self.position.x = nx
+    self.position.y = ny
     
     if self.stayOnScreen then
       if self.position.x < 0 then
@@ -172,18 +174,8 @@ function Projectile:update(dt, player, map)
   end
   
   if self.dropped then
-    
-    local nx, ny = collision.move(map, self, self.position.x, self.position.y,
-                                  self.width, self.height, 
-                                  self.velocity.x * dt, self.velocity.y * dt)
-    -- FIXME: Need a better solution
-    -- Colliding with floor
-    if self.velocity.y >= 0 and ny <= self.position.y then
-        self.dropped = false
-    end
     self.position.x = nx
     self.position.y = ny
-        
     -- X velocity won't need to change
     self.velocity.y = self.velocity.y + game.gravity*dt
   end
@@ -288,15 +280,14 @@ function Projectile:pickup(node)
   return self
 end
 
-function Projectile:floor_pushback(node, new_y)
+function Projectile:floor_pushback()
   if self.dead then return end
   if self.solid and self.thrown then self:die() end
 
   -- Pushback code for a dropped item
   if self.dropped then
     self.dropped = false
-    self.position.y = new_y
-    self.velocity.y = 0
+    return
   end
   
   if not self.thrown then return end
@@ -304,8 +295,6 @@ function Projectile:floor_pushback(node, new_y)
     self.velocity.y = -self.velocity.y * self.bounceFactor
     self.velocity.x = self.velocity.x * self.friction
   elseif self.velocity.y<25 then
-    self.velocity.y = 0
-    self.position.y = new_y
     self.thrown = false
     self:finish()
   else
@@ -317,7 +306,7 @@ function Projectile:floor_pushback(node, new_y)
   if self.props.floor_collide then self.props.floor_collide(node, new_y, self) end
 end
 
-function Projectile:wall_pushback(node, new_x)
+function Projectile:wall_pushback(new_x)
   if self.dead then return end
   if self.solid then self:die() end
   self.velocity.y = self.velocity.y * self.friction
