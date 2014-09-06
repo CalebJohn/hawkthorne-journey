@@ -29,12 +29,12 @@
    eJxjYBgFAw38B9oBZACgmxtgbA4qmqswAHqR9XkjsdOJ1I+sR4EEfbjc4Y1PERQg26GASxEFbqCnXkrspKZZuPRGMjIwRAFxNCN5droA9bkCsRsQuwOxBw5zCJnFA8S8QMwHxPxkuAMdeEFpCyQxRRxqVYBYFYjVsMh9BOJPWMxCBtyouAGKUQC63r9A/A+IG4F4HRCvB7kPGHZK0PCrRSqDsIE0KF3HAFbY0MCA0LAWiH2B2A+IOYHmceGIE7wWAEELDnGQ+aJAM8WA+CiQfQyIjwOxJZBvhWbXVBxmwMSn4ZBPheCGyUB6MlTMHIcZDFA1yBif3TAAM+8eEN9HUj8diGcQ0DsKRgEhAABRcCXk
   </data>
  </layer>
- <layer name="collisions" width="48" height="14">
+ <layer name="collision" width="48" height="14">
   <data encoding="base64" compression="zlib">
-   eJx7yMjA8HAUj2Iy8SgYBaNgFNAafGOE4MFoJiFzCNmBSx4mTox+QmYgq0NWj00fseaBwEDXP6N4aGMA7zwSkw==
+   eJx7yMjA8HAUj2Iy8SgYBaNgFIxk8I0RgocioNTdA13/jOKhjQHIGAE1
   </data>
  </layer>
- <objectgroup draworder="topdown" name="nodes" width="48" height="14" visible="0">
+ <objectgroup name="nodes" width="48" height="14">
   <object name="main" type="door" x="91" y="217" width="32" height="53">
    <properties>
     <property name="level" value="greendale-exterior"/>
@@ -98,9 +98,5 @@
     <property name="info" value="This door is locked."/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup draworder="topdown" name="block" width="48" height="14">
-  <object x="1" y="266" width="1159" height="36"/>
-  <object x="0" y="0" width="1152" height="72"/>
  </objectgroup>
 </map>

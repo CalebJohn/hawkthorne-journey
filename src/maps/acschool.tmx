@@ -19,12 +19,12 @@
    eJxjYBgFowAB2NHoUQABwoPMnIECHFBaGUlMEEoLkWiWEhpfHIglSNDPicbnQmIroMmp4DBDF4/5GkCsiSamBcTaULYMA0MDlGYwgIqJ4jBLD4j18diFCxgDsQmRaq0JyFsCsRUZbrADYnsy9A1nAADXswTq
   </data>
  </layer>
- <layer name="collisions" width="33" height="14">
+ <layer name="collision" width="33" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUoIMIKB4Fo4AYEIFGY5OnND05j+JBgwGrNxv6
   </data>
  </layer>
- <objectgroup draworder="topdown" name="nodes" width="33" height="14" visible="0">
+ <objectgroup name="nodes" width="33" height="14">
   <object name="main" type="door" x="49" y="232" width="24" height="48"/>
   <object type="info" x="97" y="195" width="21" height="64">
    <properties>
@@ -77,7 +77,7 @@
     <property name="info" value="This trashcan is so clean you can eat out of it.|Sadly, there is nothing edible inside."/>
    </properties>
   </object>
-  <object name="sunchamber" type="door" x="144" y="217" width="24" height="60">
+  <object name="sunchamber" type="door" x="144" y="217" width="24" height="48">
    <properties>
     <property name="level" value="sunchamber"/>
     <property name="to" value="main"/>
