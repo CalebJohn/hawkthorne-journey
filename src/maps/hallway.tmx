@@ -12,7 +12,7 @@
  </tileset>
  <layer name="background" width="100" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0MkKgDAMBNBiXS/uBwWX//9Lc2ihFqEebIwyh0cggRlIqpRKAQA+QAPALVOE2187JHQCwFlByoBKUC53R8zOjOTeridDwPhSLncHV2dtZks6b7eSLWAP5Lu5+sFc7o6YnfbfC5nNdF3tIB777wZESUCUA7C1KLk=
+   eJzt0MsKgCAQBVBJe216Lwp6/P9fNgsFk2BaqFlc4TAwwr0wSgihAAA+QALAI3OAv792pNAJAFclqRh1QrmxO0J25qRwdgMZGdNLubE7YnU2enakd3Yb2RkHk2/nSo+5sTtCdpp7r2TR03a3A//MM/duISkZJOUE/pYogQ==
   </data>
  </layer>
  <layer name="accents" width="100" height="14">
@@ -22,12 +22,9 @@
  </layer>
  <layer name="collision" width="100" height="14">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAIAzC8YQL/SnjAw442aRUAAAAA5Jj72qhkWdSpGt0=
+   eJztw0ENAAAMA6F6m39Ps3EPSNgAAAAAoOtMpeUBpOsaLQ==
   </data>
  </layer>
- <objectgroup name="block" width="100" height="14">
-  <object x="0" y="288" width="2400" height="24"/>
- </objectgroup>
  <objectgroup color="#0000a4" name="nodes" width="100" height="14">
   <object name="exit" type="door" x="2352" y="240" width="24" height="48">
    <properties>
@@ -110,8 +107,5 @@
   <object type="ceiling_hippy" x="1704" y="24" width="48" height="24"/>
   <object type="ceiling_hippy" x="2112" y="24" width="48" height="24"/>
   <object type="ceiling_hippy" x="576" y="24" width="48" height="24"/>
- </objectgroup>
- <objectgroup name="ceiling" width="100" height="14">
-  <object type="ceiling" x="0" y="0" width="2400" height="72"/>
  </objectgroup>
 </map>
