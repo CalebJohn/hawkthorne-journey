@@ -232,6 +232,7 @@ function Weapon:floor_pushback()
     if not self.dropping then return end
 
     self.dropping = false
+    self.velocity.y = 0
 end
 
 return Weapon

@@ -115,6 +115,7 @@ function Scroll:floor_pushback()
     if not self.dropping then return end
     
     self.dropping = false
+    self.velocity.y = 0
     self.collider:setPassive(self.bb)
 end
 
