@@ -31,10 +31,10 @@
  </layer>
  <layer name="collision" width="166" height="18">
   <data encoding="base64" compression="zlib">
-   eJzt11sKhDAMheGu2024ZRHfRNKLuWn+DwrzIj2T1EmnNQAAAB270rLI9Dd//E4VaJx7eg/UYz3LtOa31Sz34pG9cn1x8e7/F87RU557zsz5I1AHnDgDmGUxb7jDrOvNv9GaedadPvZJ9bH43zXbk2zv65scb+uV/TcqczZAG2ccwIrRu8LMMxU83Yfun6N4Z1jZT3pmU1wSzX1m9u2xzCXl9Ny3+pJE7dsTVZ/oXmVfB1eLDIQ=
+   eJzt2NsNgCAMQFHmdgmXcFDjr0EK0hfhnqTfNC1YsBQAAAAdp1JARp3WpLHv6T2wH+v52Dufr4FAHXclfJ0pq/6vsI9q+bzzzJx/BOqAB3sAoyzuG9xh/pPmX2/NPOtOH2Wtt5DWW2Cmx9nO60wes/XK/o3KnBugjf9IACwwQ+HtUAyvdUbWlVjm1crTc93doyVqXUlUfaJ7lT1uC2MCqA==
   </data>
  </layer>
- <objectgroup draworder="topdown" name="nodes" width="166" height="18" visible="0">
+ <objectgroup name="nodes" width="166" height="18">
   <object name="main" type="door" x="24" y="240" width="24" height="48">
    <properties>
     <property name="level" value="deans-office-2"/>

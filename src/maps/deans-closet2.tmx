@@ -39,7 +39,7 @@
    eJxjYBgFo4B40E8lM6hhDiHzKbEDWT81zKMUUGo3Je7Hpq+fSEyM+oECpLh/pIGqAcIDBQBHhiU0
   </data>
  </layer>
- <objectgroup draworder="topdown" name="nodes" width="30" height="15" visible="0">
+ <objectgroup name="nodes" width="30" height="15">
   <object name="next" type="door" x="600" y="264" width="24" height="48">
    <properties>
     <property name="level" value="greendale-exterior"/>
