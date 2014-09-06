@@ -33,7 +33,7 @@
    eJx7yMjA8JCGeBSMglGACb4NcN4g1n5alg3DoXwAAHXcLE8=
   </data>
  </layer>
- <objectgroup draworder="topdown" name="nodes" width="24" height="14" visible="0">
+ <objectgroup name="nodes" width="24" height="14">
   <object name="main" type="door" x="49" y="217" width="44" height="52">
    <properties>
     <property name="level" value="greendale-exterior"/>
