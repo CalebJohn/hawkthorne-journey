@@ -32,10 +32,10 @@
  </layer>
  <layer name="collision" width="45" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF9AAThyAeBaNgFIyCkQaWoWFy9BDST6wd+NQNdP0wWqcMXgAAudM/TQ==
+   eJxjYBgF9AAThyAeBaNgFIyCkQaWoeGBtAOfuoGuH0brlMELAE4GOsM=
   </data>
  </layer>
- <objectgroup name="nodes" width="45" height="14" visible="0">
+ <objectgroup name="nodes" width="45" height="14">
   <properties>
    <property name="foreground" value="true"/>
   </properties>
