@@ -68,12 +68,12 @@
  </layer>
  <layer name="leaves_2" width="130" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt280JwjAYBuAcHcN9xLN4E4p7OIqjdBRHMfEHa7FaS20wfR54QXNKyZvPXgwBAB62ISw/ZR+Te5/81rpn9KFsfXugD2X7tgfNPvj9KMfQHnQldqGe9AEYRbzHu3s67v3L9Tdzop78IRhVvMun7TWXXsTvu7QeP5sJPPXDTCC5d8JMIPnUBzNhXtrvDu13C+ah+e7g7P/bIoTDIvcmyE4PgKHMDxI9AAAAAAAASlGFcNxcs6z8p2Y2Gud+ySquNaMPZas6zr0rtz7UmbbLyL49/1YX6hx75neG9CDFTAAA6O8MmjZlug==
+   eJzt28FtwjAUBuB3ZIzsU/WMuCFF7MEoHSWjMAo2KSKNGghpwGryfdIvgU+O/PuRCxEAcLOLqB7lkFJ6n7zW58jow7KN7YE+LNuzPej2we/HckztwVBSF5q3PgCzSPd4f83Avf91/c6caN7+EMwq3eXTrs2lF+n7Pq+nz2YCP/phJpBdO2EmkD3qg5mwLv13h/67BevQfXdw9v/bJuK4Kb0JitMDYCrzg0wPAAAAAADgb6qIY+k90KojvrZtqtp/alajc+6XfKS1bvRh2eqBcx/Kdx+aQttlZs+ef68LTYk98zpTepBjJgAAjHcGfmpmWg==
   </data>
  </layer>
  <layer name="foreground" width="130" height="40">
   <data encoding="base64" compression="zlib">
-   eJztmktS4zAURV+KnsMEmk8GacA0Ez4JRVE0EzbAApgx6X14Kb2ULIWl9FUSFUKRItmWHUe+t+pUJYp/8rt60hOIUBRFUdSX3kUmIf6CbT8n1a7eIqEf8lasD+iHvFXVB6YfOH/ko7o+8AEvzDvtAJVEGMcfGs+4d7ZvyBPzzjtBJRXG8uf7koUv8P1DteMzcwL1zR/MCZSS9gRzAqUU8gNzwrBkrx3stQU1DJlrB8Z+dzUdSXkP7sAtuAHbfiaqe81WvCD+f8AzOAUn4Bj8pC8GoZmDK8S+AJfgAhyBQ/oha7l8YHMOD/wCnEPyVYwPbDiH5Kc6PuAckp+a+sA3h1zhc4jfnfSQilFqH1ThoYP+UXHK3QePHdwjB7Uda9QUgtpCUGMIag21b9XK/DAW+XdgoNu1D36A1W+TMf9vak0xsTzD+9t3gPaJfSxqBkHtIKghBLWEoKYQ1BaqxkiaF+y4qzibaJk+MKEfvism7nto86G9gBpBUCsIagZB7SDFaFFLNJ4fxo4xjM+vdlyr+sD0g2bIvnDFf1PcFa5cjxpB1QrJ1gljxzjXcToI+MBUyAfME0uZHvDFvU6uD4E1gaoto+rLbTGk/dOVB15d8W+S6yNyQDlb0vpatQGLZxzC/qnq777lAz1Wm+T6nvqgjMR7fK77p/DAxM4DXcTIc4/YODnZ1M9UPrCJ3T/t+96paz7YBR/U6WsbPnCc4+tvrxXwcVkE+liEr7GgsN6b9oHvfNcarYkHROiDTQo8fzkN9HEavoY+rrTeS7m6vvfeCt8arWZfU/sgVPfY7WvH9WW+CPV1Gv496v3a13moeL4i1RotpQ8Cc6jdvnZcX/LELvnApsrfuHPiGjwlZpd94Bi/g6CNHJKJD/oMfTBsHySPf5s++A89PXdY
+   eJztmk1OwzAQhV3Bvuz466ISpLDpolSILRfgAOzYcI8chaP0KByFcVsLM7U742KnqfOe9KTguCHOfB5P3BoDQRAEQb96N2Yq+ZN87PuEyupNafBQt7QcgIe6lcqBzwPWj3p0KAcxEwurTgcAZRHN4w/nyLwPtu/JE6vOBwFlFc3l7/eN11zQ3x+2nY6RE6A/fCAnQFaOCeQEyEriATlhWOK1A68toGHIrx0Q+9PV1ci0l+Rj3wd0XN0TA3fkG/I1GVwMU0/M4GKY4hyEDC7ql4YD5Iv6lcoBuKhT/+UgxsWMjiU/dDJCSKPcHKR42cH4IJ1q5+C5g/9Rg0rHej4yhuoFu19lqH4wVEcUWR8mxnxdeHbtjoNz8vbcdILfTe1IE8tben7jgKl9yvta8bhTvWDrBtNYBkZ58gKPu42zbyefA9/g4a80cT+jtpgtC6lxT+FgEpjDdPzK45rKgc+D85C5CMV/X9ytY3GfKeOu4WASmOcuThcCB74kDpAnNvIZODTu3JrYU01g3y1V75fHMt8TmVe8L7Jl4LXkfI/kgPZp487fU7Se2X0Q8hD2yux4xx4Hdp7y9V27zp8AB63Swb41c0EMTP1c4OJjz5WMSYQDbZyC3jfOHBzErNlD7fveKa8FToWDQ8aayEEql9J4ey2hVmobYYyNfI21G/bcHAexz5fIueAgLuH+24UwxoV8DdevZc+l3V4/2N+uw03mtbgAB9J7D2/f6deX9UIa60I+r3q+/DpL4fP8PnNykZMDod7l7Tv9+pIn+spBiIVQn5TvuWvxI/kls/vMQYJDc7Fal8ghlXDQZ4ODYXOQPf4lOfgB7mJn+Q==
   </data>
  </layer>
  <layer name="features" width="130" height="40">
@@ -83,7 +83,7 @@
  </layer>
  <layer name="trees" width="130" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt2EsKwjAURuHoKFBw4mPgxGzIBbiAbkNdiotzId6fKIhQTGvbtPF8cKlCsSk5WNQ5AAAAAGjmnbv63ItAdnQAoQMIHUDoAEIHkLYd0E2Z6ABCB+iCDiBDd0Bn80AHGMNYHdDbtNEBtrY3m8T9+XUf6WDaUveHDspGBxAfnw16RjS62DlnOiga3weQOXZQQlOV3cPOpsq9kKcuHeydu63iBI29D31dJ0UJHege1vE4CcHWE1qcp/1f2vFzvvWQep0UdAChAwgdQEKPz5hc6AASrINDAT2P5Z57AQD+Rm2/g09xQp3wPwjy8IthPve1/0d7/T70AAAAcngASw8wmQ==
+   eJzt10sKwjAURuHoKFBw4mPgxGzIBbiAbkNdiotzId6fWhChmD7TxvNBqEKxKfeg1TkAAAAAaOadu/vUm0BydAChAwgdQOgAQgeQth3QTZ7oAEIH6IIOIGN3QGfLQAeYwlQd0Nu80QH2Nptd5Hz6zpEO5i12PnSQNzqA+Oq3Qb8RjW52zpUOssb3AWSJHeTQVGH3cLBVpN7IW5cOjs49NtUKWvY+DHWdGDl0oHvYVsdZCLaf0OI8zX9tx+/1q4fY68SgAwgdQOgAtZB6Az3RASRYB6cBn5ly90y9AQB/o7T/wZdqhXL5jx3Z8qtxPree/9lefy56AAAAKbwAZtsv+Q==
   </data>
  </layer>
  <layer name="leaves" width="130" height="40">
@@ -93,10 +93,10 @@
  </layer>
  <layer name="collision" width="130" height="40">
   <data encoding="base64" compression="zlib">
-   eJzt2EkOgkAQBVA4rldw2jnPnthakIgGgxGVDv1e8vck9XugiwIAAAAAAAAAPrcui2IT2ZZ9fwmpOEUXzpFL5KoXVPSCJnpBk9TvFvPyMfzet/YKMxuW57X4KgBtuuwn9px0LWIey8jK+ZCVXcx2HzlEjuacDXPPk7nnq37Gd/XuPbDPpP5O9i/W/F2Ob+ru8O1y7AXtvJ0yBKMyvYwjk8g0MrOOqKTci2/8l/CZlHtBf/o+x4YQAKi7AYiRiMs=
+   eJzt2FkOgjAUBdB2uW7BaQPOrNh++CEEI0FIW3tOcv9J3u1AQwAAAAAAAACA+R4xhC7m/gpKcUtduEe9oE8vGKMXjKmhF8fYD+tbqhdm9l+Ga/FTAL75ZT+x55TplGZxTrmkXJ0PzRjOnTaYe5vMvU1rzH3qPTBnangrW5P1Pq6lXri7T9dSL5jO2ym128Qys03ZpexTDtYSL6X2Yon/EuYrtRfklfscqz0A8O4JXAWJ5g==
   </data>
  </layer>
- <objectgroup color="#000000" name="nodes" width="130" height="40" visible="0">
+ <objectgroup color="#000000" draworder="topdown" name="nodes" width="130" height="40" visible="0">
   <object name="main" type="door" x="72" y="336" width="24" height="48"/>
   <object type="liquid" x="216" y="840" width="168" height="120">
    <properties>
